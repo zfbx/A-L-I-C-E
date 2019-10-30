@@ -86,7 +86,7 @@
 
         <main id="main" class="p-4" role="main">
             <h3 class="cover-heading text-info">Say something..</h3>
-            <p class="lead">I will try to do as you say.</p>
+            <p id="results">Listening..</p>
             <!--<p class="lead">
                 <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
             </p>-->
@@ -302,6 +302,15 @@
         if (annyang && enableVoice) {
             annyang.addCommands(commands);
             annyang.start();
+            annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
+                console.log(userSaid); // sample output: 'hello'
+                console.log(commandText); // sample output: 'hello (there)'
+                console.log(phrases); // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
+                $('#results').html(userSaid);
+                setTimeout(function() {
+                    $('#results').html('');
+                }, 5000);
+            });
         }
     }
 
