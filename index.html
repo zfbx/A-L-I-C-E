@@ -296,6 +296,9 @@
         'what time is it': function() { action.time(); },
         'what day is it': function() { action.day(); },
         'echo *echo': function(msg) { action.echo(msg); },
+        '*stuff': function(stuff) {
+            console.log(stuff)
+        }
     };
 
     function startListening() {
