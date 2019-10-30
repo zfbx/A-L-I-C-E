@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Listener</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Big+Shoulders+Text&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/7721096c08.js" crossorigin="anonymous"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            background-color: #333;
+        }
+        body {
+            font-family: 'Big Shoulders Text', cursive;
+            display: -ms-flexbox;
+            display: flex;
+            color: #fff;
+            text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .3);
+            box-shadow: inset 0 0 5rem rgba(0, 0, 0, .3);
+        }
+        a {
+            color: rgb(245, 108, 142);
+        }
+        a:hover {
+            color: rgb(192, 85, 112);
+        }
+        .nav-link {
+            color: #fff;
+            font-size: 1.3em;
+            padding: .5rem 0.5rem;
+        }
+        .nav-link:hover {
+            color: rgb(245, 108, 142);
+        }
+        .nav-link:active {
+            color: rgb(192, 85, 112);
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="cover-container d-flex w-100 h-100 mx-auto flex-column">
+        <header class="masthead bg-dark px-4 py-1 shadow">
+            <div class="inner d-flex d-flex-col align-items-center">
+                <h1 class="masthead-brand text-white m-0"  data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Alice Listens and Insightfully Communicates Executions">A.L.I.C.E</h1>
+                <div class="flex-fill">&nbsp;</div>
+                <ul class="nav justify-content-end">
+                    <!--<li class="nav-item">
+                        <a class="nav-link active" href="#">Active</a>
+                    </li>-->
+                    <li class="nav-item">
+                        <span data-toggle="modal" data-target="#ttsModalCenter">
+                            <a class="nav-link" href="#" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="TTS">
+                                <i class="fas fa-bullhorn"></i>
+                            </a>
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <span data-toggle="modal" data-target="#settingsModalCenter">
+                            <a class="nav-link" href="#" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Settings">
+                                <i class="fas fa-cog"></i>
+                            </a>
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <span data-toggle="modal" data-target="#helpModalCenter">
+                            <a class="nav-link" href="#" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Help">
+                                <i class="fas fa-question-circle"></i>
+                            </a>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <main id="main" class="p-4" role="main">
+            <h3 class="cover-heading text-info">Say something..</h3>
+            <p class="lead">I will try to do as you say.</p>
+            <!--<p class="lead">
+                <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
+            </p>-->
+            <p>
+                <button id="time" type="button" class="btn btn-primary">time</button>
+                <button id="day" type="button" class="btn btn-primary">day</button>
+                <p id="details"></p>
+            </p>
+        </main>
+
+        <div id="captions" style=" position: fixed; bottom: 50px; left: 30px; right: 30px; box-sizing: border-box;">
+
+        </div>
+
+        <footer class="mastfoot px-4" style="position: absolute; bottom: 0; width: 100%; height: 60px; line-height: 60px;">
+            <div class="inner">
+                <p class="text-right m-0">Made with ❤ by <a href="https://bunny.cc/">Tony</a>.</p>
+            </div>
+            
+        </footer>
+    </div>
+    
+<!-- tts Modal -->
+<div class="modal fade" id="ttsModalCenter" tabindex="-1" role="dialog" aria-labelledby="ttsModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-dark" id="ttsModalCenterTitle">TTS</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="text-dark" for="formGroupExampleInput">Message</label>
+                <input type="text" class="form-control" id="ttsinput" placeholder="What should I say?" onkeyup="messageSay()">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="talk($('#ttsinput').val())">Say it!</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal fade" id="settingsModalCenter" tabindex="-1" role="dialog" aria-labelledby="settingsModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-dark" id="settingsModalCenterTitle">Settings</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body text-dark">
+            ...
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Help Modal -->
+<div class="modal fade" id="helpModalCenter" tabindex="-1" role="dialog" aria-labelledby="helpModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark" id="helpModalCenterTitle">Help</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="helpdlg" class="modal-body text-dark">
+                
+                    <div class="accordion" id="accordionHelp">
+
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        General Help
+                                    </button>
+                                </h2>
+                            </div>
+                        
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionHelp">
+                                <div class="card-body">
+                                    Hi
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        List of commands
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionHelp">
+                                <div class="card-body" id="cmdlist" style="max-height:300px;overflow-y: scroll;">
+                                    ...
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<script>
+    var enableVoice = false;
+
+    var msg = new SpeechSynthesisUtterance();
+    var voiceTimer = setInterval(function() {
+        var voices = speechSynthesis.getVoices();
+        if (voices.length !== 0) {
+            msg.rate = 0.9; // 0.1 to 10
+            msg.pitch = 1; //0 to 2
+            msg.volume = 0.8; // 0 to 1
+            msg.text = 'Hi'; 
+            msg.lang = 'en-US'; //'hi-IN';
+            msg.voice = voices[3];
+            msg.voiceURI = 'Google US English';
+            msg.onend = function(e) {
+                console.log('Finished in ' + event.elapsedTime + ' seconds.');
+            };
+            console.log('Voice Loaded.')
+            clearInterval(voiceTimer);
+        }
+    }, 200);
+
+    function talk(message) {
+        msg.text = message;
+        caption(message);
+        window.speechSynthesis.speak(msg);
+    }
+    function caption(text) {
+        var html = $(`<div class='w-80 alert fade show alert-info align-self-end'>${text}</div>`);
+        $('#captions').append(html);
+        setTimeout(function() {
+            html.alert('close');
+        }, 5000);
+    }
+
+    function uncensor(com) {
+		com = com.replace(/p\*\*\*\*\*\*\.com/gi, 'pornhub.com');
+		com = com.replace(/f\*\*\*\*\*\*/gi, 'fucking');
+		com = com.replace(/p\*\*\*/gi, 'porn');
+		com = com.replace(/f\*\*\*/gi, 'fuck');
+		com = com.replace(/c\*\*\*/gi, 'cunt');
+		com = com.replace(/b\*\*\*\*/gi, 'bitch');
+		com = com.replace(/p\*\*\*\*/gi, 'pussy');
+		return com;
+    }
+
+    var action = {
+        goto: function(msg) {
+            window.open(`https://${uncensor(msg).replace(/\s+/g, '')}`,'_blank');
+        },
+        gsearch: function(msg) {
+            window.open(`https://www.google.com/search?q=${uncensor(msg).replace(/\s+/g, '+')}`,'_blank');
+        },
+        gisearch: function(msg) {
+            window.open(`https://www.google.com/search?tbm=isch&q=${uncensor(msg).replace(/\s+/g, '+')}`,'_blank');
+        },
+        opensl: function() {
+            window.open('secondlife://Alethia%20Island/128/25/24','_blank');
+        },
+        myname: function() {
+            talk("I don't actually have a name.. Just call me listener.");
+        },
+        time: function() {
+            talk(`The time is ${moment().format('h:mm a')}`);
+        },
+        day: function() {
+            talk(`Today is ${moment().format('MMMM Do YYYY')}`);
+        },
+        echo: function(msg) {
+            talk(uncensor(msg));
+        },
+    };
+    var commands = {
+        'go to *site': function(msg) { action.goto(msg); },
+        'google search for *search': function(msg) { action.gsearch(msg); },
+        'google image search for *search': function(msg) { action.gisearch(msg); },
+        'open second life': function() { action.opensl(); },
+        'What is your name': function() { action.myname(); },
+        'what time is it': function() { action.time(); },
+        'what day is it': function() { action.day(); },
+        'echo *echo': function(msg) { action.echo(msg); },
+    };
+
+    function startListening() {
+        if (annyang && enableVoice) {
+            annyang.addCommands(commands);
+            annyang.start();
+        }
+    }
+
+
+    function generateHelp() {
+        var commandlist = Object.keys(commands);
+        commandlist = commandlist.map(function(x){ return x.replace(/\*[^ ]+/g,"[query]") });
+        $('#cmdlist').html(commandlist.join('<br />'));
+    }
+
+
+    // JS Listeners
+    $(function () {
+        $('[data-toggle="popover"]').popover();
+        //$('.collapse').collapse();
+    });
+    
+    $('#ttsinput').on('keypress',function(e) {
+        if(e.which == 13) {
+            talk($('#ttsinput').val())
+        }
+    });
+    $('#love').click(function() { talk('I love you!') });
+    $('#time').click(function() { action.time() });
+    $('#day').click(function() { action.day() });
+
+    // Start Functions
+    generateHelp();
+    startListening();
+
+    
+</script>
+</body>
+</html>
+
