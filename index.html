@@ -217,7 +217,6 @@
 
 <script>
     var enableVoice = true;
-
     var msg = new SpeechSynthesisUtterance();
     var voiceTimer = setInterval(function() {
         var voices = speechSynthesis.getVoices();
@@ -232,7 +231,6 @@
             msg.onend = function(e) {
                 console.log('Finished in ' + event.elapsedTime + ' seconds.');
             };
-            console.log('Voice Loaded.')
             clearInterval(voiceTimer);
         }
     }, 200);
@@ -317,7 +315,6 @@
         }
     }
 
-
     function generateHelp() {
         var commandlist = Object.keys(commands);
         commandlist = commandlist.map(function(x){ return x.replace(/\*[^ ]+/g,"[query]") });
@@ -328,13 +325,9 @@
     // JS Listeners
     $(function () {
         $('[data-toggle="popover"]').popover();
-        //$('.collapse').collapse();
     });
-    
     $('#ttsinput').on('keypress',function(e) {
-        if(e.which == 13) {
-            talk($('#ttsinput').val())
-        }
+        if(e.which == 13) { talk($('#ttsinput').val()); }
     });
     $('#love').click(function() { talk('I love you!') });
     $('#time').click(function() { action.time() });
@@ -343,8 +336,6 @@
     // Start Functions
     generateHelp();
     startListening();
-
-    
 </script>
 </body>
 </html>
